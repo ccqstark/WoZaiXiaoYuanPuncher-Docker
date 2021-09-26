@@ -8,6 +8,7 @@ WORKDIR /app
 
 RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple requests schedule
 
-RUN echo "Asia/Shanghai" > /etc/timezone
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN echo 'Asia/Shanghai' > /etc/timezone
 
 CMD ["python", "main.py"]

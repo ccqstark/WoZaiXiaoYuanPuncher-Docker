@@ -65,3 +65,13 @@ docker build -t puncher .
 docker run -d --name="puncher" puncher
 ```
 
+
+
+## 更新jwsession
+
+进入容器
+
+```shell
+docker exec -it puncher /bin/bash
+```
+
