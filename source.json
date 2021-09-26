@@ -1,0 +1,20 @@
+[
+  {
+    "username": "一般是手机号",
+    "password": "忘记密码的话可以在小程序端重置密码，但是还是建议抓包拿jwsession",
+    "temperature": "36.5",
+    "latitude": "23.065038",
+    "longitude": "113.399206",
+    "country": "中国",
+    "city": "广州市",
+    "district": "番禺区",
+    "province": "广东省",
+    "township": "小谷围街道",
+    "street": "大学城外环东路178",
+    "myArea": "",
+    "areacode": "",
+    "userId": "",
+    "notification_type": "PushPlus",
+    "notify_token": "关注公众号PushPlus即可获得个人token"
+  }
+]
