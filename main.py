@@ -51,7 +51,7 @@ def job():
 
 if __name__ == '__main__':
     # 设置定时任务执行规则(早晚打卡)
-    schedule.every().day.at("7:30").do(job)
+    schedule.every().day.at("07:30").do(job)
     schedule.every().day.at("19:30").do(job)
 
     # 测试一次
