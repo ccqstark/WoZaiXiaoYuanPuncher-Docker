@@ -1,5 +1,7 @@
 # -*- encoding:utf-8 -*-
 import datetime
+import time
+
 from WoZaiXiaoYuanPuncher import WoZaiXiaoYuanPuncher
 from utils.jsonHandler import JsonReader
 from utils.sqlliteUtil import EasySqlite
@@ -60,3 +62,4 @@ if __name__ == '__main__':
     # 开始定时执行
     while True:
         schedule.run_pending()
+        time.sleep(1)
