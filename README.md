@@ -128,8 +128,8 @@ iOS推荐这款`Stream`应用，简洁好用，在app store中即可安装
 
 ## 🔗其它版本友链
 
-* 云函数版 ([Chorer/WoZaiXiaoYuanPuncher-cloudFunction](https://github.com/Chorer/WoZaiXiaoYuanPuncher-cloudFunction))
-* GitHub Actions版 [jimlee2002/WoZaiXiaoYuanPuncher-Actions](https://github.com/jimlee2002/WoZaiXiaoYuanPuncher-Actions)
+* 云函数版：[Chorer/WoZaiXiaoYuanPuncher-cloudFunction](https://github.com/Chorer/WoZaiXiaoYuanPuncher-cloudFunction)
+* GitHub Actions版：[jimlee2002/WoZaiXiaoYuanPuncher-Actions](https://github.com/jimlee2002/WoZaiXiaoYuanPuncher-Actions)
 
 ## ⚠️声明
 
@@ -138,3 +138,4 @@ iOS推荐这款`Stream`应用，简洁好用，在app store中即可安装
 3. 开发者不对任何下载者和使用者的任何行为负责。
 4. 本程序无任何后门，所有数据仅存留于使用者机器上。
 5. 请不要轻易将自己的账号信息告诉他人。
+
