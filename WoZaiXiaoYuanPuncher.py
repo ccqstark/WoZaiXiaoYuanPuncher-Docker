@@ -96,7 +96,7 @@ class WoZaiXiaoYuanPuncher:
             print("未知错误")
             self.status_code = 0
 
-    # 执行打卡
+    # 晨晚检
     # 参数seq ： 当前打卡的序号
     def doPunchIn(self, seq):
         self.header['Host'] = "student.wozaixiaoyuan.com"
@@ -121,6 +121,35 @@ class WoZaiXiaoYuanPuncher:
         data = urlencode(sign_data)
         response = self.session.post(url=url, data=data, headers=self.header)
         response = json.loads(response.text)
+        # 打卡情况
+        if response["code"] == 0:
+            print("打卡成功")
+            self.status_code = 1
+        else:
+            print("打卡失败")
+            self.status_code = 0
+
+    # 健康打卡
+    def healthRegistration(self):
+        self.header['Host'] = "student.wozaixiaoyuan.com"
+        self.header['Content-Type'] = "application/x-www-form-urlencoded"
+        url = "https://student.wozaixiaoyuan.com/health/save.json"
+        sign_data = {
+            "answers": '["0","1","1"]',
+            "latitude": self.data['latitude'],
+            "longitude": self.data['longitude'],
+            "country": self.data['country'],
+            "city": self.data['city'],
+            "district": self.data['district'],
+            "province": self.data['province'],
+            "township": self.data['township'],
+            "street": self.data['street']
+        }
+        data = urlencode(sign_data)
+        response = self.session.post(url=url, data=data, headers=self.header)
+        response = json.loads(response.text)
+        print(response)
+        print(response["code"])
         # 打卡情况
         if response["code"] == 0:
             print("打卡成功")

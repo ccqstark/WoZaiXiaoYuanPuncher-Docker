@@ -14,8 +14,8 @@ SQLITE_DIR = "database.sqlite"
 JSON_FILE = "source.json"
 
 
-# 打卡任务定义
-def job():
+# 晨晚检
+def job1():
     json_util = JsonReader(JSON_FILE)
     json = json_util.getJson()
     connection = EasySqlite(SQLITE_DIR)
@@ -51,13 +51,31 @@ def job():
                 wzxy.sendNotification()
 
 
+# 健康打卡
+def job2():
+    json_util = JsonReader(JSON_FILE)
+    json = json_util.getJson()
+    connection = EasySqlite(SQLITE_DIR)
+    for item in json:
+        result = connection.execute("select * from jwsession where username=?", [item["username"]])
+        wzxy = WoZaiXiaoYuanPuncher(item)
+        # 根据列表长度判断数据库中是否有该用户信息
+        if len(result) > 0:
+            wzxy.setJwsession(result[0]["jwsession"])
+            login_status = wzxy.testLoginStatus()
+            if login_status == 1:
+                wzxy.healthRegistration()
+            wzxy.sendNotification()
+
+
 if __name__ == '__main__':
-    # 设置定时任务执行规则(早晚打卡)
-    schedule.every().day.at("07:30").do(job)
-    schedule.every().day.at("19:30").do(job)
+    # 设置定时任务执行规则
+    schedule.every().day.at("07:30").do(job1)
+    schedule.every().day.at("19:30").do(job1)
+    schedule.every().day.at("00:10").do(job2)
 
     # 测试一次
-    job()
+    job2()
 
     # 开始定时执行
     while True:
