@@ -4,6 +4,8 @@ import requests
 import json
 from urllib.parse import urlencode
 from utils.dingdingBotUtil import DingDingBot
+import hashlib
+import time
 
 
 class WoZaiXiaoYuanPuncher:
@@ -102,6 +104,7 @@ class WoZaiXiaoYuanPuncher:
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/x-www-form-urlencoded"
         url = "https://student.wozaixiaoyuan.com/heat/save.json"
+        cur_time = int(time.time()*1000) ## ms
         sign_data = {
             "answers": '["0"]',
             "seq": str(seq),
@@ -116,8 +119,16 @@ class WoZaiXiaoYuanPuncher:
             "street": self.data['street'],
             "myArea": self.data['myArea'],
             "areacode": self.data['areacode'],
-            "userId": self.data['userId']
+            "towncode": self.data['towncode'],
+            "citycode": self.data['citycode'],
+            "userId": self.data['userId'],
+            "timestampHeader": cur_time
         }
+        #signature 加密反编译出为 a.default.SHA256(e.data.province + "_" + e.time + "_" + e.data.city).toString()
+        #以下为python实现
+        hash=hashlib.sha256()
+        hash.update(bytes("{}_{}_{}".format(sign_data["province"],sign_data["timestampHeader"],sign_data["city"]),encoding='utf-8'))
+        sign_data["signatureHeader"] = hash.hexdigest()
         data = urlencode(sign_data)
         response = self.session.post(url=url, data=data, headers=self.header)
         response = json.loads(response.text)

@@ -13,6 +13,8 @@
     "street": "大学城外环东路178",
     "myArea": "",
     "areacode": "",
+    "towncode": "510354002",
+    "citycode": "552510100",
     "userId": "",
     "notification_type": "PushPlus",
     "notify_token": "关注公众号PushPlus即可获得个人token"
