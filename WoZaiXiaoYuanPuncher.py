@@ -4,6 +4,8 @@ import requests
 import json
 from urllib.parse import urlencode
 from utils.dingdingBotUtil import DingDingBot
+import time
+import hashlib
 
 
 class WoZaiXiaoYuanPuncher:
@@ -79,7 +81,7 @@ class WoZaiXiaoYuanPuncher:
         response = self.session.post(url=url, data=self.body, headers=self.header)
         res = json.loads(response.text)
         # 遍历每个打卡时段（不同学校的打卡时段数量可能不一样）
-        print(res) # test
+        print(res)  # test
         if res['code'] == 0:
             for i in res['data']:
                 # 判断时段是否有效，一般情况下同一时刻只有一个有效时段
@@ -102,6 +104,12 @@ class WoZaiXiaoYuanPuncher:
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/x-www-form-urlencoded"
         url = "https://student.wozaixiaoyuan.com/heat/save.json"
+        # 时间戳
+        t = time.time()
+        timestamp = str(round(t * 1000))
+        # 签名
+        signature_origin_data = self.data['province'] + '_' + timestamp + '_' + self.data['city']
+        signature = hashlib.sha256(signature_origin_data.encode('utf-8')).hexdigest()
         sign_data = {
             "answers": '["0"]',
             "seq": str(seq),
@@ -116,7 +124,9 @@ class WoZaiXiaoYuanPuncher:
             "street": self.data['street'],
             "myArea": self.data['myArea'],
             "areacode": self.data['areacode'],
-            "userId": self.data['userId']
+            "userId": self.data['userId'],
+            "timestampHeader": timestamp,
+            "signatureHeader": signature
         }
         data = urlencode(sign_data)
         response = self.session.post(url=url, data=data, headers=self.header)
@@ -134,6 +144,12 @@ class WoZaiXiaoYuanPuncher:
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/x-www-form-urlencoded"
         url = "https://student.wozaixiaoyuan.com/health/save.json"
+        # 时间戳
+        t = time.time()
+        timestamp = str(round(t * 1000))
+        # 签名
+        signature_origin_data = self.data['province'] + '_' + timestamp + '_' + self.data['city']
+        signature = hashlib.sha256(signature_origin_data.encode('utf-8')).hexdigest()
         sign_data = {
             "answers": '["0","1","1"]',
             "latitude": self.data['latitude'],
@@ -143,7 +159,9 @@ class WoZaiXiaoYuanPuncher:
             "district": self.data['district'],
             "province": self.data['province'],
             "township": self.data['township'],
-            "street": self.data['street']
+            "street": self.data['street'],
+            "timestampHeader": timestamp,
+            "signatureHeader": signature
         }
         data = urlencode(sign_data)
         response = self.session.post(url=url, data=data, headers=self.header)
@@ -183,8 +201,8 @@ class WoZaiXiaoYuanPuncher:
             title = "⏰ 我在校园打卡结果通知"
             content = "## 我在校园打卡结果通知 \n" \
                       "打卡情况：{} \n \n " \
-                      "打卡时间：{} \n".format(notify_result,notify_time)
-            dingding.set_msg(title,content)
+                      "打卡时间：{} \n".format(notify_result, notify_time)
+            dingding.set_msg(title, content)
             # 仅在失败情况下推送提醒
             if self.status_code != 1 and self.status_code != -1:
                 dingding.send()
@@ -205,5 +223,3 @@ class WoZaiXiaoYuanPuncher:
         else:
             # 无事发生,不触发推送
             return "⭕"
-
-
