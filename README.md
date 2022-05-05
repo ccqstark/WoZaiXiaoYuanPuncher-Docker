@@ -142,3 +142,7 @@ iOS推荐这款`Stream`应用，简洁好用，在app store中即可安装
 4. 本程序无任何后门，所有数据仅存留于使用者机器上。
 5. 请不要轻易将自己的账号信息告诉他人。
 
+
+## ⭐️仓库 Star 趋势
+
+[![Stargazers over time](https://starchart.cc/ccqstark/WoZaiXiaoYuanPuncher-Docker.svg)](https://starchart.cc/ccqstark/WoZaiXiaoYuanPuncher-Docker)
